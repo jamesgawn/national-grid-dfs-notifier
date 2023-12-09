@@ -31,16 +31,13 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
   test:
-    strategy:
-      matrix:
-        go-version: [1.21.x]
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    name: Build Docker Test
+    runs-on: ubuntu-latest
     steps:
       - name: Install Go
         uses: actions/setup-go@v5.0.0
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.21.x
       - name: Checkout code
         uses: actions/checkout@v5.0.0
       - name: Test
