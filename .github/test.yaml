@@ -1,0 +1,6 @@
+name: Publish Pipeline
+on:
+  push:
+    branches: [main]
+
+jobs: 
