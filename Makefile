@@ -1,10 +1,10 @@
 OS=$(shell go env GOOS)
 ARCH=$(shell go env GOARCH)
 FILENAME=aoc-$(OS)-$(ARCH)
-FILE_LOCATION=./bin/$(FILENAME)
+FILE_LOCATION=./bin/ng-dfs-notifier
 
 build:
-	go build -o ./bin/ ./main.go
+	go build -o ./bin/ng-dfs-notifier ./main.go
 
 buildWithArch:
 	go build -o $(FILE_LOCATION) ./
