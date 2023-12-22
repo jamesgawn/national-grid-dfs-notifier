@@ -10,3 +10,10 @@ func TestGetDemandFlexibilityServiceRequirements(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestGetDFSRequirementsForSupplier(t *testing.T) {
+	result := GetDFSRequirementsForSupplier("OCTOPUS ENERGY LIMITED")
+	if result == nil {
+		t.Fail()
+	}
+}

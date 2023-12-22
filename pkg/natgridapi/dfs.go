@@ -3,6 +3,7 @@ package natgridapi
 import (
 	"encoding/json"
 	"net/http"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -98,4 +99,39 @@ func adaptDFSRRDtoToDomain(requirementDtos []DFSRequirementResultRecordsDto) []D
 		requirements = append(requirements, requirement)
 	}
 	return requirements
+}
+
+func GetDFSRequirementsForSupplier(supplierName string) []DFSRequrement {
+	allRequirements := GetDemandFlexibilityServiceRequirements()
+	var supplierRequirements = make([]DFSRequrement, 0)
+
+	for _, requirement := range allRequirements {
+		if slices.Contains(requirement.EligibleSuppliers, supplierName) {
+			supplierRequirements = append(supplierRequirements, requirement)
+		}
+	}
+
+	return mergeAdjacentDFSRequirements(supplierRequirements)
+}
+
+func mergeAdjacentDFSRequirements(requirements []DFSRequrement) []DFSRequrement {
+	slices.SortStableFunc(requirements, func(a, b DFSRequrement) int {
+		return a.From.Compare(b.From)
+	})
+
+	mergedRequirement := make([]DFSRequrement, 0)
+
+	for i, requirement := range requirements {
+		if i != 0 {
+			lastMergedRequirement := mergedRequirement[len(mergedRequirement)-1]
+			if requirement.From == lastMergedRequirement.To {
+				lastMergedRequirement.To = requirement.To
+				mergedRequirement[len(mergedRequirement)-1] = lastMergedRequirement
+				continue
+			}
+		}
+		mergedRequirement = append(mergedRequirement, requirement)
+	}
+
+	return mergedRequirement
 }
