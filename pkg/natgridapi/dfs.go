@@ -41,13 +41,13 @@ func GetDemandFlexibilityServiceRequirements() []DFSRequrement {
 		log.Fatal().Err(err).Msg("Failed to retrieve DFS requirement from National Grid API")
 	}
 
+	log.Info().Int("statusCode", response.StatusCode).Msg("Retrieved DFS data from National Grid API")
+
 	var decodedResponse DFSRequirementResponseDto
 	err = json.NewDecoder(response.Body).Decode(&decodedResponse)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to decode DFS requirement data from National Grid API")
 	}
-
-	log.Debug().Int("statusCode", response.StatusCode).Msg("Retrieved DFS data from National Grid API")
 
 	return adaptDFSRRDtoToDomain(decodedResponse.Result.Records)
 }
