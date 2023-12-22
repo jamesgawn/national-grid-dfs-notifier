@@ -15,6 +15,7 @@ import (
 func main() {
 	debug := flag.Bool("debug", false, "sets the log level to debug")
 	supplierName := flag.String("supplierName", "OCTOPUS ENERGY LIMITED", "specifies for which supplier to obtain requirements")
+	telegramChatId := flag.String("telegramChatId", "-4074517448", "The ID of the chat group to send the notifications")
 	telegramBotToken := flag.String("telgramBotToken", "", "the bot token to send messages if new requirements are found")
 
 	tgt := os.Getenv("TELEGRAM_BOT_TOKEN")
@@ -54,7 +55,7 @@ func main() {
 	to := futureRequirements[0].To.Format(time.TimeOnly)
 	message := fmt.Sprintf("Upcoming demand on %s %s to %s", date, from, to)
 
-	err := telegram.SendMessage("-4074517448", message)
+	err := telegram.SendMessage(*telegramChatId, message)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to send message to Telegram")
 	}
