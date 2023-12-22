@@ -20,5 +20,5 @@ func main() {
 
 	log.Info().Msg("Hello World")
 
-	ngapi.GetDemandFlexibilityServiceRequests()
+	ngapi.GetDemandFlexibilityServiceRequirements()
 }
