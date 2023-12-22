@@ -1,4 +1,4 @@
-package ngapi
+package natgridapi
 
 import (
 	"testing"

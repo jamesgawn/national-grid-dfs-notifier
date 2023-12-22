@@ -1,4 +1,4 @@
-package ngapi
+package natgridapi
 
 import (
 	"encoding/json"
@@ -56,11 +56,13 @@ type DFSRequrement struct {
 	AcceptancePriceGBPPerMWh int
 	RequestedMW              int
 	DispatchType             string
+	ServiceRequirementType   string
 	EligibleSuppliers        []string
 	From                     time.Time
 	To                       time.Time
 }
 
+// Convert raw reuirement dto to a domain object more adept to be utilised in business logic
 func adaptDFSRRDtoToDomain(requirementDtos []DFSRequirementResultRecordsDto) []DFSRequrement {
 	requirements := make([]DFSRequrement, 0)
 
@@ -88,6 +90,7 @@ func adaptDFSRRDtoToDomain(requirementDtos []DFSRequirementResultRecordsDto) []D
 			AcceptancePriceGBPPerMWh: acceptancePrice,
 			RequestedMW:              requirementDto.DFSRequestedMW,
 			DispatchType:             requirementDto.DespatchType,
+			ServiceRequirementType:   requirementDto.ServiceRequirementType,
 			EligibleSuppliers:        eligibleSuppliers,
 			From:                     from,
 			To:                       to,
