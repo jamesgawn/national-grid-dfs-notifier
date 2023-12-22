@@ -105,6 +105,7 @@ func GetDFSRequirementsForSupplier(supplierName string) []DFSRequrement {
 	allRequirements := GetDemandFlexibilityServiceRequirements()
 	var supplierRequirements = make([]DFSRequrement, 0)
 
+	log.Debug().Str("supplierName", supplierName).Msg("Filtering requirements to supplier.")
 	for _, requirement := range allRequirements {
 		if slices.Contains(requirement.EligibleSuppliers, supplierName) {
 			supplierRequirements = append(supplierRequirements, requirement)
@@ -121,15 +122,20 @@ func mergeAdjacentDFSRequirements(requirements []DFSRequrement) []DFSRequrement 
 
 	mergedRequirement := make([]DFSRequrement, 0)
 
+	log.Debug().Msg("Merging requirements with contiguous time slots.")
 	for i, requirement := range requirements {
 		if i != 0 {
 			lastMergedRequirement := mergedRequirement[len(mergedRequirement)-1]
 			if requirement.From == lastMergedRequirement.To {
+				log.Debug().Int("currentRequirementId", requirement.Id).
+					Int("previousRequirementId", lastMergedRequirement.Id).
+					Msg("Merging current requirement into previous requirement")
 				lastMergedRequirement.To = requirement.To
 				mergedRequirement[len(mergedRequirement)-1] = lastMergedRequirement
 				continue
 			}
 		}
+		log.Debug().Int("currentRequirementId", requirement.Id).Msg("Adding requirement to list")
 		mergedRequirement = append(mergedRequirement, requirement)
 	}
 
