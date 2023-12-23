@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"os"
 
 	"github.com/jamesgawn/ng-dfs-notifier/pkg/natgridapi"
 	_ "github.com/mattn/go-sqlite3"
@@ -13,6 +14,8 @@ type DFSDatabase struct {
 }
 
 func Open(databaseFile string) (*DFSDatabase, error) {
+	wd, err := os.Getwd()
+	log.Info().Str("databaseLocation", databaseFile).Str("workingDirectory", wd).Msg("Opening database file")
 	db, err := sql.Open("sqlite3", databaseFile)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to open the database")

@@ -18,7 +18,7 @@ func main() {
 	supplierName := flag.String("supplierName", "OCTOPUS ENERGY LIMITED", "specifies for which supplier to obtain requirements")
 	telegramChatId := flag.String("telegramChatId", "-4074517448", "The ID of the chat group to send the notifications")
 	telegramBotToken := flag.String("telgramBotToken", "", "the bot token to send messages if new requirements are found")
-	databaseLocation := flag.String("databaseLocation", "./storage/database.db", "The location to place the sqlite DB for the command")
+	databaseLocation := flag.String("databaseLocation", "./database.db", "The location to place the sqlite DB for the command")
 
 	tgt := os.Getenv("TELEGRAM_BOT_TOKEN")
 	if tgt != "" {
