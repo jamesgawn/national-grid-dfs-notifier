@@ -4,7 +4,7 @@ FILENAME=aoc-$(OS)-$(ARCH)
 FILE_LOCATION=./bin/ng-dfs-notifier
 
 build:
-	go build -o ./bin/ng-dfs-notifier ./main.go
+	CGO_ENABLED=1 go build -o ./bin/ng-dfs-notifier ./main.go
 
 buildWithArch:
 	go build -o $(FILE_LOCATION) ./
