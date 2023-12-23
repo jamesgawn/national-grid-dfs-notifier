@@ -10,6 +10,7 @@ FROM golang:latest
 ENV HOME=/home
 COPY --from=build /ng-dfs-notifier /ng-dfs-notifier
 COPY --from=build /etc/ssl/certs /etc/ssl/certs
+RUN mkdir storage
 
 VOLUME ["/storage"]
 
