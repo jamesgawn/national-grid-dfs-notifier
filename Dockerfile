@@ -9,6 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o /ng-dfs-notifier ./main.go
 FROM scratch
 ENV HOME=/home
 COPY --from=build /ng-dfs-notifier /ng-dfs-notifier
+COPY --from=build /etc/ssl/certs /etc/ssl/certs
 
 VOLUME ["/storage"]
 
